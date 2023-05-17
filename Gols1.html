@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sistema de Contagem de Gols</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    
+    h1 {
+      text-align: center;
+    }
+    
+    .player-list {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    .player-item {
+      margin-bottom: 10px;
+    }
+    
+    .player-name {
+      font-weight: bold;
+      display: inline-block;
+      width: 100px;
+    }
+    
+    .player-gols {
+      display: inline-block;
+      width: 40px;
+      text-align: center;
+    }
+    
+    .btn-container {
+      display: flex;
+      justify-content: center;
+    }
+    
+    .btn {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 12px;
+      margin-right: 5px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    
+    .btn-remove {
+      background-color: #f44336;
+    }
+    
+    .export-btn {
+      background-color: #2196F3;
+      margin-top: 20px;
+      display: block;
+      text-align: center;
+      padding: 10px;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    
+    @media (max-width: 480px) {
+      .player-name, .player-gols {
+        display: block;
+        width: auto;
+      }
+      
+      .btn-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Sistema de Contagem de Gols</h1>
+  
+  <ul class="player-list">
+    <li class="player-item">
+      <span class="player-name">Jogador 1:</span>
+      <span class="player-gols">0</span>
+      <div class="btn-container">
+        <button class="btn btn-add" onclick="addGol(this)">+</button>
+        <button class="btn btn-remove" onclick="removeGol(this)">-</button>
+      </div>
+    </li>
+    <li class="player-item">
+      <span class="player-name">Jogador 2:</span>
+      <span class="player-gols">0</span>
+      <div class="btn-container">
+        <button class="btn btn-add" onclick="addGol(this)">+</button>
+        <button class="btn btn-remove" onclick="removeGol(this)">-</button>
+      </div>
+    </li>
+  </ul>
+  
+  <a class="export-btn" onclick="exportToExcel()">Exportar para Excel</a>
+  
+  <script>
+    function addGol(button) {
+      var golElement = button.parentNode.previousElementSibling;
+      var currentGols = parseInt(golElement.textContent);
+      golElement.textContent = currentGols + 1;
+    }
+    
+    function removeGol(button) {
+      var golElement = button.parentNode.previousElementSibling;
+      var currentGols = parseInt(golElement.textContent);
+      
+      if (currentGols > 0) {
+        golElement.textContent = currentGols - 1;
+      }
+    }
+    
+    function exportToExcel() {
+      var tableData = [];
+      var rows = document.querySelectorAll('.player-item');
+      
+      for (var i = 0; i < rows.length; i++) {
+        var name = rows[i].querySelector('.player-name').textContent;
+        var gols = rows[i].querySelector('.player-gols').textContent;
+        
+        tableData.push([name, gols]);
+      }
+      
+      var csvContent = "data:text/csv;charset=utf-8,";
+      
+      tableData.forEach(function(rowArray) {
+        var row = rowArray.join(",");
+        csvContent += row + "\r\n";
+      });
+      
+      var encodedUri = encodeURI(csvContent);
+      var link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "dados_gols.csv");
+      document.body.appendChild(link);
+      
+      link.click();
+    }
+  </script>
+</body>
+</html>
