@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .container {
+      text-align: center;
+    }
+    
+    .team {
+      display: inline-block;
+      margin: 0 20px;
+    }
+    
+    .score {
+      font-size: 48px;
+      font-weight: bold;
+    }
+    
+    .btnRemove {
+      display: inline-block;
+      padding: 15px 20px;
+      background-color: #2F4F4F;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+
+    .btnAdd {
+      display: inline-block;
+      padding: 15px 20px;
+      background-color: #008000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+    
+    .btnLimpar {
+      display: inline-block;
+      padding: 15px 20px;
+      background-color: #8B0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0 5px;
+    }
+    
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="team">
+      <h2>Time 1</h2>
+      <div class="score" id="teamAScore">0</div>
+      <button class="btnAdd" onclick="incrementScore('teamAScore')">+</button>
+      <button class="btnRemove" onclick="decrementScore('teamAScore')">-</button>
+    </div>
+    <div class="team">
+      <h2>Time 2</h2>
+      <div class="score" id="teamBScore">0</div>
+      <button class="btnAdd" onclick="incrementScore('teamBScore')">+</button>
+      <button class="btnRemove" onclick="decrementScore('teamBScore')">-</button>
+    </div>
+    <button class="btnLimpar" onclick="clearScores()">Limpar</button>
+  </div>
+  
+
+  <script>
+    function incrementScore(scoreId) {
+      var scoreElement = document.getElementById(scoreId);
+      var currentScore = parseInt(scoreElement.innerHTML);
+      scoreElement.innerHTML = currentScore + 1;
+    }
+    
+    function decrementScore(scoreId) {
+      var scoreElement = document.getElementById(scoreId);
+      var currentScore = parseInt(scoreElement.innerHTML);
+      if (currentScore > 0) {
+        scoreElement.innerHTML = currentScore - 1;
+      }
+    }
+    
+    function clearScores() {
+      document.getElementById('teamAScore').innerHTML = 0;
+      document.getElementById('teamBScore').innerHTML = 0;
+    }
+  </script>
+</body>
+</html>
